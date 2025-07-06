@@ -76,28 +76,97 @@ function getLocation() {
         return;
       }
 
-      fetch("https://script.google.com/macros/s/AKfycbzSaGogLo5Awiparb3Npga3ADWSUd3N61xsSTSDjs-w1jhJjEJh2WqzGjNvGoZDUZ9A/exec", {
+      const baseUrl = "https://script.google.com/macros/s/AKfycbzSaGogLo5Awiparb3Npga3ADWSUd3N61xsSTSDjs-w1jhJjEJh2WqzGjNvGoZDUZ9A/exec";
+
+      const params = new URLSearchParams({
+        name: name,
+        country: country,
+        city: city,
+        gps: gps
+      });
+
+/*
+      fetch(`${baseUrl}?${params.toString()}`, {
+        method: "GET",
+        redirect: "follow",
+        mode: "no-cors"
+      })*/
+      
+      fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/submit", {
+      // fetch("http://localhost:8888/.netlify/functions/submit", {
+        // redirect: "follow",
         method: "POST",
         body: JSON.stringify({name, country, city, gps}),
         headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+          // "Content-Type": "application/json"
+        }
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("Fetch!!");
+        console.log(res);
+        if (res.status === "success") {
+          alert("Signup for "+name+" saved to Google Sheets! ");
+          // document.getElementById("signupForm").reset();
+        } else {
+          console.error(res);
+          // alert("Failed to save. Try again.");
+        }
+      })
+      .catch((err) => {
+        console.error( err);
+        //alert("Error submitting form.");
+      });
+/*      
+      .then((res) => res.text())
+      .then((resText) => {
+        if (resText === "Success") {
+          alert("Signup saved to Google Sheets!");
+          document.getElementById("signupForm").reset();
+        } else {
+          console.log(resText);
+        }
+      })
+      */
+      /*
+      fetch("https://script.google.com/macros/s/AKfycbzSaGogLo5Awiparb3Npga3ADWSUd3N61xsSTSDjs-w1jhJjEJh2WqzGjNvGoZDUZ9A/exec", {
+        redirect: "follow",
+        method: "POST",
+        body: JSON.stringify({name, country, city, gps}),
+        headers: {
+          // "Content-Type": "text/plain;charset=utf-8",
           "Content-Type": "application/json"
         }
       })
+      // .then((res) => res.text())
+      // .then((resText) => {
+      //   if (resText === "Success") {
+      //     alert("Signup saved to Google Sheets!");
+      //     document.getElementById("signupForm").reset();
+      //   } else {
+      //     console.log(resText);
+      //   }
+      // })
+      
         .then((res) => res.json())
         .then((res) => {
+          console.log("Fetch!!");
           if (res.status === "success") {
             alert("Signup saved to Google Sheets!");
             document.getElementById("signupForm").reset();
           } else {
-            alert("Failed to save. Try again.");
+            console.error(res);
+            // alert("Failed to save. Try again.");
           }
         })
+        
         .catch((err) => {
-          console.error("Error:", err);
-          alert("Error submitting form.");
+          console.log( err);
+          //alert("Error submitting form.");
         });
-
-      alert(`Name: ${name}\nCountry: ${country}\nCity: ${city}\nGPS: ${gps}`);
+*/
+      // alert(`Name: ${name}\nCountry: ${country}\nCity: ${city}\nGPS: ${gps}`);
     });
   }
   
