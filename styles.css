@@ -73,6 +73,15 @@ body {
     background-color: #e0e0e0;
   }
 
+  #submitBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  #submitBtn {
+    transition: background-color 0.3s, opacity 0.3s;
+  }
 
   input[type="submit"] {
     background: #007BFF;

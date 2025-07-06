@@ -91,7 +91,10 @@ function getLocation() {
         redirect: "follow",
         mode: "no-cors"
       })*/
-      
+      const submitBtn = document.getElementById("submitBtn");
+      console.log("Registrando...")
+      submitBtn.disabled = true;
+      submitBtn.value = "Registering...";
       fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/submit", {
       // fetch("http://localhost:8888/.netlify/functions/submit", {
         // redirect: "follow",
@@ -117,6 +120,10 @@ function getLocation() {
       .catch((err) => {
         console.error( err);
         //alert("Error submitting form.");
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.value = "Register";
       });
 /*      
       .then((res) => res.text())
