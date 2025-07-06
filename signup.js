@@ -111,7 +111,7 @@ function getLocation() {
         console.log(res);
         if (res.status === "success") {
           alert("Signup for "+name+" saved to Google Sheets! ");
-          // document.getElementById("signupForm").reset();
+          document.getElementById("signupForm").reset();
         } else {
           console.error(res);
           // alert("Failed to save. Try again.");
