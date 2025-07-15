@@ -45,6 +45,7 @@ async function verifySignature(publicKey, message, signature) {
 	// 	extractable,   // true if the key can be exported later
 	// 	keyUsages      // array of allowed uses like ["sign", "verify"]
 	// )
+
 async function deriveAesKeyFromPassphrase(passphrase, salt) {
 		const encoder = new TextEncoder();
 		const keyMaterial = await crypto.subtle.importKey(
@@ -126,19 +127,21 @@ async function loadAndDecryptPrivateKey(passphrase) {
 const message = "hello blockchain world";
 
 (async () => {
+	/*
 	console.log("Decripting ...");
+
 	key = await loadAndDecryptPrivateKey("1234");
 	let isValid = await verifySignature(publicKey, message, signature);
-	/*
-  const { publicKey, privateKey } = await generateKeyPair();
+	*/
 
+  const { publicKey, privateKey } = await generateKeyPair();
   const signature = await signMessage(privateKey, message);
 //   console.log("Signature:", new Uint8Array(signature));
-	encryptAndStorePrivateKey(privateKey, "1234");
+	encryptAndStorePrivateKey(privateKey, "");
   let isValid = await verifySignature(publicKey, message, signature);
   console.log("Valid?", isValid);
 	isValid = await verifySignature(publicKey, "hello blockchain worlt", signature);
   console.log("Valid?", isValid);
-*/
+
 //   await exportPrivateKey(privateKey);
 })();

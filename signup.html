@@ -10,28 +10,30 @@
 
   <form class="form-container" id="signupForm">
     <h2>Farm Signup</h2>
-    <label for="farm_name">Farm Name</label>
-    <input type="text" id="farm_name" name="farm_name" required />
 
-    <label for="actor_name">Full Name</label>
+    <label for="actor_name">Your Full Name</label>
     <input type="text" id="actor_name" name="actor_name" required />
 
     <label for="country">Country</label>
     <select id="country" name="country" required></select>
 
-    <label for="city">City</label>
-    <select id="city" name="city" required>
-        <option value="">-- Select City --</option>
+    <label for="region">Region</label>
+    <select id="region" name="region" required>
+        <option value="">-- Select Region --</option>
     </select>
+
+    <label for="farm_name">Farm Name</label>
+    <input type="text" id="farm_name" name="farm_name" required />
 
     <label for="gps">GPS Location</label>
     <button type="button" onclick="getLocation()">Share GPS Location</button>
     <input type="text" id="gps" name="gps" required readonly placeholder="Click above to update" />
 
-    <input type="submit" id="submitBtn" value="Registerr" />
+    <input type="submit" id="submitBtn" value="Register" />
   </form>
 
   <script src="signup.js"></script>
+  <script src="encryption_lib.js"></script>
   <!-- <script src="main.js"></script> -->
 </body>
 </html>
