@@ -11,6 +11,13 @@
 - **Weight** (fresh cherries)  
 - **Moisture before drying (%)**
 
+- ### After Selection:
+- Sign data with private key. [TODO]
+- Send REST API request with signed info. [TODO]
+- API verifies signature with stored public key. [TODO]
+- If valid, adds entry to the passport (Database). [TODO]
+
+
 # Drying  
 - **Farm** (dropdown)  
 - **Location**  
@@ -87,11 +94,13 @@
 ### On Page Load:
 - [TODO] Check if local private key exists and notify if missing.
 - [TODO] Validate `unique_code`, confirm actor does not have a public key in DB.
-
+- [TODO] Ask for phone number
+- [TODO] Request agreement for terms and services, and data EU protections laws.
 ### On Clicking Register:
 - [TODO] Check for existing local private key before creating a new one (one user per device).
+
 - ✅ Web app creates public/private key pair stored on their phone.
-- ✅ They send info + public key to Netlify API.
+- [TODO] They send info + phone number + public key to Netlify API.
 - ✅ Private key stored in local storage, encrypted (currently no passkey).
 - ✅ Name and `actor_id` saved encrypted locally.
 - ✅ Public key saved to DB/spreadsheet.
@@ -110,7 +119,6 @@
 ---
 
 ## When They Scan
-- [TODO] Rename `index.html` → `scanned.html`
 - Open URL:
   ```
   https://savashito.github.io/scanned.html?nfc_id=d61e09c0-801d-4947-a83d-8cac990513fa
@@ -120,17 +128,12 @@
   - Private key from local storage (decrypted via salt) [✅ Done]
   - Name and `actor_id` decrypted [Doce]
 - Select what to log: [✅ Done]
-  - Harvesting  
+  - Harvesting  [✅ Done]
   - Drying  
   - Processing  
   - Dry Mill  
   - Export Preparation  
 
-### After Selection:
-- Sign data with private key.
-- Send REST API request with signed info.
-- API verifies signature with stored public key.
-- If valid, adds entry to the passport.
 
 ---
 
