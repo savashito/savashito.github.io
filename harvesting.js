@@ -1,9 +1,12 @@
 let actor_id=''
+let actor_name=''
 let key=''
+
 loadAndDecryptPrivateKey("9732")
 .then((decrypted_data) => {
   actor_id= decrypted_data.actor_id
   key = decrypted_data.key
+  actor_name = decrypted_data.name
   console.log(actor_id);
     // {key, actor_id, name}
   });
@@ -18,7 +21,9 @@ document.getElementById('harvestForm').addEventListener('submit', function(e) {
   
     const harvestType = document.getElementById('harvest-type').value;
     const harvestDate = document.getElementById('harvest-date').value;
-
+    const action_weight = document.getElementById('weight').value;
+    const action_moisture = document.getElementById('moisture').value;
+    const gps_location = document.getElementById('gps').value;
     if(!key){
       alert('Please sign up first.');
     }
@@ -26,8 +31,36 @@ document.getElementById('harvestForm').addEventListener('submit', function(e) {
       alert('Please fill out all fields.');
       return;
     }
+  const urlParams = new URLSearchParams(window.location.search);
+  const nfc_id = urlParams.get("nfc_id");
+  const action_type = 'Harvesting';
+  const farm_id = '1';
+  // const icn_number = 'jojo';
+  const action_variety_process = harvestType;
+  const action_date = harvestDate;
     
-    alert(` ${actor_id} Harvest Type: ${harvestType} \nEnd Date: ${harvestDate}`);
+  let o = {
+    nfc_id,
+    actor_id,
+    action_type,
+    farm_id: '1',
+    // icn_number,
+    action_variety_process,
+    action_date,
+    action_weight,
+    action_moisture,
+    gps_location
+  };
+  signMessage(key, JSON.stringify(o))
+  .then((signature) => {
+    console.log(signature);
+    o.signature_base64 = arrayBufferToBase64(signature);
+    send_to_api("submit_dp_harvesting_entry", o);
+  })
+
+  // send_to_api("submit_dp_harvesting_entry", o);
+
+    // alert(` ${actor_id} Harvest Type: ${harvestType} \nEnd Date: ${harvestDate}`);
 });
 
 const farms_dic = {
@@ -36,10 +69,7 @@ const farms_dic = {
   "Mbale South": ["Kampala", "Mbale", "Fort Portal"]
 };
 
-const urlParams = new URLSearchParams(window.location.search);
-const nfc = urlParams.get("nfc");
 
-console.log("NFC value:", nfc);
 
 
 // Get dropdown elements
@@ -56,3 +86,37 @@ if (farmSelect) {
   });
 }
   
+function send_to_api(api_endpoint, o){
+  const submitBtn = document.getElementById("submitBtn");
+  submitBtn.value = "Submitting...";
+  submitBtn.disabled = true;
+  fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/"+api_endpoint, {
+    method: "POST",
+    body: JSON.stringify(o),
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8",
+    }
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    console.log("Fetch!!");
+    console.log(res);
+    if (res.status === "success") {
+      alert('Your entry was successfully saved, '+actor_name);
+      // document.getElementById("signupForm").reset();
+    } else {
+      console.error(res);
+      // alert("Failed to save. Try again.");
+    }
+  })
+  .catch((err) => {
+    console.error( err);
+    //alert("Error submitting form.");
+  })
+  .finally(() => {
+    submitBtn.disabled = false;
+    submitBtn.value = "Submit";
+  });
+}
+
+

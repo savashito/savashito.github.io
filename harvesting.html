@@ -26,6 +26,12 @@
     <label for="harvest-date">Harvest Date</label>
     <input type="date" id="harvest-date" name="harvest-date" required />
 
+    <label for="weight">Weight of fresh cherries (Kg)</label>
+    <input type="number" id="weight" name="weight" min="0" placeholder="60" required />
+
+    
+    <label for="moisture">Moisture before drying (%):</label>
+    <input id="moisture" type="number" min="0" step="0.1" max="100" placeholder="60.5">
     <!-- <label for="start-date">Planted Date</label>
     <input type="date" id="start-date" name="start-date" /> -->
 
@@ -33,7 +39,7 @@
     <button type="button" onclick="getLocation()">Share GPS Location</button>
     <input type="text" id="gps" name="gps" required readonly placeholder="Click above to update" />
 
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Submit" id="submitBtn"/>
   </form>
 
   <script src="encryption_lib.js"></script>

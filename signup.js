@@ -87,10 +87,10 @@ if (countrySelect && regionSelect) {
       */
       // this is a message in the code
       // here I am getting the submit button
-      const submitBtn = document.getElementById("submitBtn");
       // submitBtn.style.pointerEvents = "none"; 
       console.log("Registering...")
       // alert(submitBtn)
+      const submitBtn = document.getElementById("submitBtn");
       submitBtn.value = "Registering...";
       submitBtn.disabled = true;
       let { publicKey, privateKey } = await generateKeyPair();
@@ -99,6 +99,8 @@ if (countrySelect && regionSelect) {
       console.log(jwk);
       // we store the private key
       encryptAndStorePrivateKey({privateKey, actor_id, name}, "9732");
+      send_to_api("submit", o);
+
       fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/submit", {
         // console.log("Sending");
       // fetch("http://localhost:8888/.netlify/functions/submit", {

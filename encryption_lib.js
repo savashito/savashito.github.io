@@ -89,7 +89,28 @@ async function loadAndDecryptPrivateKey(passphrase) {
 		return {key, actor_id, name};
 	}
 
+async function signMessage(privateKey, message) {
+	const enc = new TextEncoder();
+	const data = enc.encode(message);
+	return await crypto.subtle.sign(
+		{
+		name: "ECDSA",
+		hash: { name: "SHA-256" },
+		},
+		privateKey,
+		data
+	);
+	}
 
+function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+}
+	
 // GPS location function
 function getLocation() {
     const gpsInput = document.getElementById("gps");
