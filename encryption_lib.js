@@ -150,6 +150,7 @@ function getLocation() {
 	  console.log(res);
 	  if (res.status === "success") {
 		alert('Your entry was successfully saved, '+actor_name);
+		// alert('Your entry was successfully saved, '+actor_name);
 		// document.getElementById("signupForm").reset();
 	  } else {
 		console.error(res);
