@@ -99,7 +99,7 @@ if (countrySelect && regionSelect) {
       console.log(jwk);
       // we store the private key
       encryptAndStorePrivateKey({privateKey, actor_id, name}, "9732");
-      send_to_api("submit", o);
+      // send_to_api("submit", o);
 
       fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/submit", {
         // console.log("Sending");

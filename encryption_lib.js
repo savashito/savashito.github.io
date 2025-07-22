@@ -133,3 +133,36 @@ function getLocation() {
     );
   }
   
+  function send_to_api(api_endpoint, o){
+	const submitBtn = document.getElementById("submitBtn");
+	submitBtn.value = "Submitting...";
+	submitBtn.disabled = true;
+	fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/"+api_endpoint, {
+	  method: "POST",
+	  body: JSON.stringify(o),
+	  headers: {
+		"Content-Type": "text/plain;charset=utf-8",
+	  }
+	})
+	.then((res) => res.json())
+	.then((res) => {
+	  console.log("Fetch!!");
+	  console.log(res);
+	  if (res.status === "success") {
+		alert('Your entry was successfully saved, '+actor_name);
+		// document.getElementById("signupForm").reset();
+	  } else {
+		console.error(res);
+		// alert("Failed to save. Try again.");
+	  }
+	})
+	.catch((err) => {
+	  console.error( err);
+	  //alert("Error submitting form.");
+	})
+	.finally(() => {
+	  submitBtn.disabled = false;
+	  submitBtn.value = "Submit";
+	});
+  }
+  
