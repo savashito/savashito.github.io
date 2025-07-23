@@ -71,17 +71,20 @@
 
 ---
 
-## Create Unique URL
-- Chiara creates unique URL on `https://savashito.github.io/create_unique_url.html`
-- Chiara fills form and clicks **Submit**:
-- **Creates entries in tables**:
-  - Checks if **pedro** is available
-  - `actor_id = nickname`
-  - Uses `crypto.randomUUID()` to create URL with format:
+## Create Unique URL [✅ Done]
+- [✅ Done] Chiara creates unique URL on `https://savashito.github.io/create_unique_url.html` 
+- [✅ Done] Chiara fills form and clicks **Submit**:
+- [✅ Done] **Creates entries in tables**:
+  - Create an entry in db called using actor_id, with everything empty 
+      actors {id}
+  - create an entre in db called 
+      urls {unique_code, actor_id}
+- [✅ Done] Checks if **pedro** is available
+- [✅ Done] `actor_id = nickname`
+- [✅ Done] Uses `crypto.randomUUID()` to create URL with format:
     ```
     http://localhost:8000/signup.html?unique_code=d61e09c0-801d-4947-a83d-8cac990513fa&actor_id=pedro
     ```
-- Load it to NFC
 - Send it to them
 
 ---
@@ -92,15 +95,15 @@
 - Prompts them to register.
 
 ### On Page Load:
-- [TODO] Check if local private key exists and notify if missing.
-- [TODO] Validate `unique_code`, confirm actor does not have a public key in DB.
-- [TODO] Ask for phone number
-- [TODO] Request agreement for terms and services, and data EU protections laws.
+- [TODO - 2 demo] Check if local private key exists and notify if they already have one.
+- [TODO - 2 demo] Validate `unique_code`, confirm actor does not have a public key in DB.
+- [TODO - 2 demo] Ask for phone number
+- [TODO - 2 demo] Request agreement for terms and services, and data EU protections laws.
 ### On Clicking Register:
-- [TODO] Check for existing local private key before creating a new one (one user per device).
+- [TODO - 2 demo] Check for existing local private key before creating a new one (one user per device).
 
 - ✅ Web app creates public/private key pair stored on their phone.
-- [TODO] They send info + phone number + public key to Netlify API.
+- [TODO - 2 demo] They send info + phone number + public key to Netlify API.
 - ✅ Private key stored in local storage, encrypted (currently no passkey).
 - ✅ Name and `actor_id` saved encrypted locally.
 - ✅ Public key saved to DB/spreadsheet.
@@ -108,13 +111,13 @@
 
 ---
 
-## If Private Key is Lost
-- Replace old public key in **actors** table with the new public key.
-- Create new table:  
+## If Private Key is Lost [TODO - 2 demo]
+- [TODO - 2 demo] Replace old public key in **actors** table with the new public key.
+- [TODO - 2 demo] Create new table:  
   `old_public_keys` with `actor_id`, `date`, and the `public_key`.
-- Copy old public key from **actors** to `old_public_keys`.
-- Send new registration link.
-  - Actor creates new public/private key pair.
+- [TODO - 2 demo] Copy old public key from **actors** to `old_public_keys`.
+- [TODO - 2 demo] Send new registration link.
+  - [TODO - 2 demo] Actor creates new public/private key pair.
 
 ---
 
@@ -124,12 +127,12 @@
   https://savashito.github.io/scanned.html?nfc_id=d61e09c0-801d-4947-a83d-8cac990513fa
   ```
 - Extract:
-  - `nfc_id` (Digital Passport ID)
-  - Private key from local storage (decrypted via salt) [✅ Done]
-  - Name and `actor_id` decrypted [Doce]
+  - [✅ Done] `nfc_id` (Digital Passport ID)
+  - [✅ Done] Private key from local storage (decrypted via salt) 
+  - [✅ Done] Name and `actor_id` decrypted [Doce]
 - Select what to log: [✅ Done]
   - Harvesting  [✅ Done]
-  - Drying  
+  - Drying 
   - Processing  
   - Dry Mill  
   - Export Preparation  
