@@ -16,7 +16,7 @@ loadAndDecryptPrivateKey("9732")
   actor_name = decrypted_data.name
   alert("You are already sign up as "+actor_name)
   console.log(decrypted_data.actor_id);
-  window.location.href = "https://example.com";
+  // window.location.href = "https://example.com";
 
     // {key, actor_id, name}
   }
