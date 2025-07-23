@@ -22,7 +22,7 @@
   if (signupForm) {
     signupForm.addEventListener("submit", async function (e) {
       e.preventDefault();
-      nfc_link.innerHTML = 'https://savashito.github.io/scanned.html?'+crypto.randomUUID()
+      nfc_link.innerHTML = 'https://savashito.github.io/scanned.html?nfc_id='+crypto.randomUUID()
 
      
     });
