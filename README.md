@@ -135,8 +135,8 @@
   - Drying 
   - Processing  
   - Dry Mill  
-  - Export Preparation  
-
+  - Export Preparation
+- Add pictures of the process
 
 ---
 
