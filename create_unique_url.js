@@ -16,9 +16,14 @@
       }
       const o = {id, unique_code}
       const url = 'https://savashito.github.io/signup.html?unique_code='+unique_code+'&actor_id='+id
-      alert(url)
-      send_to_api("submit_create_unique_url", o);
-
+      
+      res = await send_to_api_async("submit_create_unique_url", o);
+      if (res.status === "success") {
+        alert(url)
+      } else {
+          console.error(res);
+          alert("There was an error!! "+ res.error);
+      }
       /*
       Hello :)
       const params = new URLSearchParams({

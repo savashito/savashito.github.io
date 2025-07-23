@@ -16,28 +16,28 @@ if(!key){
 }*/
 
 
-document.getElementById('harvestForm').addEventListener('submit', function(e) {
+document.getElementById('processingForm').addEventListener('submit', function(e) {
     e.preventDefault();
   
-    const harvestType = document.getElementById('harvest-type').value;
-    const harvestDate = document.getElementById('harvest-date').value;
-    const action_weight = document.getElementById('weight').value;
+    const processingType = document.getElementById('processing-type').value;
+    const processingDate = document.getElementById('processing-date').value;
+    // const action_weight = document.getElementById('weight').value;
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
     if(!key){
       alert('Please sign up first.');
     }
-    if (!harvestType || !harvestDate) {
+    if (!processingType || !processingDate) {
       alert('Please fill out all fields.');
       return;
     }
   const urlParams = new URLSearchParams(window.location.search);
   const nfc_id = urlParams.get("nfc_id");
-  const action_type = 'Harvesting';
+  const action_type = 'Processing';
   const farm_id = '1';
   // const icn_number = 'jojo';
-  const action_variety_process = harvestType;
-  const action_date = harvestDate;
+  const action_variety_process = processingType;
+  const action_date = processingDate;
     
   let o = {
     nfc_id,
@@ -47,7 +47,7 @@ document.getElementById('harvestForm').addEventListener('submit', function(e) {
     // icn_number,
     action_variety_process,
     action_date,
-    action_weight,
+    // action_weight,
     action_moisture,
     gps_location
   };

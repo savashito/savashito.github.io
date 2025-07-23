@@ -1,8 +1,8 @@
 // Country → City Dictionary
 const action_dic = {
   'Harvesting':'harvesting.html',
-  'Drying':'',
-  'Processing':'',
+  'Drying':'drying.html',
+  'Processing':'processing.html',
   'Dry Mill':'',
   'Export Preparation':''
   };
@@ -22,7 +22,25 @@ if(isIdNotValid(id)){
   // Could redirect to contact page
 }
 */
+
+let actor_id=''
+let actor_name=''
+let key=''
+
+loadAndDecryptPrivateKey("9732")
+.then((decrypted_data) => {
+  actor_id= decrypted_data.actor_id
+  key = decrypted_data.key
+  actor_name = decrypted_data.name
+  console.log(actor_id);
+  const welcomeName = document.getElementById("welcome-name");
+  welcomeName.innerHTML = `Welcome ${actor_id}`
+  // welcomeName.innerHTML = `Welcome ${actor_name}`
+    // {key, actor_id, name}
+  });
+
 // Get dropdown elements
+
 const actionSelect = document.getElementById("action");
   
 // Populate the country dropdown on page load

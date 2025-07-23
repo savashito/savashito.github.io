@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harvest Form</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <form class="form-container" id="processingForm">
+    <h2>Processing Booking</h2>
+    
+    <label for="farm">Processing Location / Farm Name</label>
+    <select id="farm" name="farm" required></select>
+
+    <label for="processing-type">Processing Type</label>
+    <select id="processing-type" name="processing-type" required>
+      <option value="">-- Select Processing Type --</option>
+      <option value="fully_washed">Fully washed</option>
+      <option value="natural_sun_dried">Natural (sun-dried)</option>
+      <option value="pulped_natural">Pulped natural</option>
+    </select>
+
+    <label for="processing-date">Processing Date</label>
+    <input type="date" id="processing-date" name="processing-date" required />
+
+    <label for="moisture">Moisture after processing (%):</label>
+    <input id="moisture" type="number" min="0" step="0.1" max="100" placeholder="e.g. 10.1">
+
+
+    <label for="gps">GPS Location</label>
+    <button type="button" onclick="getLocation()">Share GPS Location</button>
+    <input type="text" id="gps" name="gps" required readonly placeholder="Click above to update" />
+
+    <input type="submit" value="Submit" id="submitBtn"/>
+  </form>
+
+  <script src="encryption_lib.js"></script>
+  <script src="processing.js"></script>
+</body>
+</html>

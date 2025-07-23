@@ -133,6 +133,46 @@ function getLocation() {
     );
   }
   
+
+  async function send_to_api_async(api_endpoint, o) {
+	const submitBtn = document.getElementById("submitBtn");
+	submitBtn.value = "Submitting...";
+	submitBtn.disabled = true;
+  
+	try {
+	  const response = await fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/" + api_endpoint, {
+		method: "POST",
+		body: JSON.stringify(o),
+		headers: {
+		  "Content-Type": "text/plain;charset=utf-8",
+		}
+	  });
+  
+	  const res = await response.json();
+  
+	  console.log("Fetch!!");
+	  console.log(res);
+  
+	  if (res.status === "success") {
+		alert('Your entry was successfully saved ');
+	  } else {
+		return res;
+		// console.error(res);
+		// alert(JSON.stringify(res));
+	  }
+	  return res;
+	} catch (err) {
+	//   console.error(err);
+	//   alert("Error submitting form.");
+	  return { status: "error", message: err.message };
+  
+	} finally {
+	  submitBtn.disabled = false;
+	  submitBtn.value = "Submit";
+	}
+  }
+
+
   function send_to_api(api_endpoint, o){
 	const submitBtn = document.getElementById("submitBtn");
 	submitBtn.value = "Submitting...";
@@ -154,7 +194,7 @@ function getLocation() {
 		// document.getElementById("signupForm").reset();
 	  } else {
 		console.error(res);
-		// alert("Failed to save. Try again.");
+		alert(res);
 	  }
 	})
 	.catch((err) => {
@@ -167,3 +207,20 @@ function getLocation() {
 	});
   }
   
+// Get dropdown elements
+const farmSelect = document.getElementById("farm");
+const farms_dic = {
+	"Mbale West": ["Oaxaca", "Guerrero", "Chiapas"],
+	"Mbale West2": ["Eje cafetero", "Armenia", "Salento"],
+	"Mbale South": ["Kampala", "Mbale", "Fort Portal"]
+  };  
+// Populate the country dropdown on page load
+if (farmSelect) {
+  farmSelect.innerHTML = '<option value="">-- Select Farm --</option>';
+  Object.keys(farms_dic).forEach((country) => {
+    const option = document.createElement("option");
+    option.value = country;
+    option.textContent = country;
+    farmSelect.appendChild(option);
+  });
+}

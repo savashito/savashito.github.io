@@ -8,6 +8,19 @@ const countries_dic = {
 const urlParams = new URLSearchParams(window.location.search);
 const unique_code = urlParams.get("unique_code");
 const actor_id = urlParams.get("actor_id");
+console.log("The actor id is " + actor_id)
+
+loadAndDecryptPrivateKey("9732")
+.then((decrypted_data) => {
+  key = decrypted_data.key
+  actor_name = decrypted_data.name
+  alert("You are already sign up as "+actor_name)
+  console.log(decrypted_data.actor_id);
+  window.location.href = "https://example.com";
+
+    // {key, actor_id, name}
+  }
+);
 
 /*
 function isIdNotValid(id){
