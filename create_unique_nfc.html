@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup Page</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <form class="form-container" id="signupForm">
+    <h2>Create Unique URL for NFC</h2>
+
+    <label id="nfc_link">The link is : </label>
+
+    <input type="submit" id="submitBtn" value="Generate new url" />
+  </form>
+  <script>
+  const nfc_link = document.getElementById("nfc_link");
+  const signupForm = document.getElementById("signupForm");
+
+  if (signupForm) {
+    signupForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      nfc_link.innerHTML = 'https://savashito.github.io/scanned.html?'+crypto.randomUUID()
+
+     
+    });
+  }
+  
+  
+  </script>
+  <!-- <script src="create_unique_url.js"></script> -->
+  <!-- <script src="encryption_lib.js"></script> -->
+  <!-- <script src="main.js"></script> -->
+</body>
+</html>
