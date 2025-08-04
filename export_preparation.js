@@ -16,7 +16,7 @@ if(!key){
 }*/
 
 
-document.getElementById('processingForm').addEventListener('submit', function(e) {
+document.getElementById('export_preparationForm').addEventListener('submit', function(e) {
     e.preventDefault();
   
     const packagingType = document.getElementById('packaging-type').value;
