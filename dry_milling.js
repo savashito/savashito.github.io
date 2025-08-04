@@ -16,7 +16,7 @@ if(!key){
 }*/
 
 
-document.getElementById('drying_milling_Form').addEventListener('submit', function(e) {
+document.getElementById('drying_millingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const dry_millingStartDate = document.getElementById('dry-milling-start-date').value;
     const action_weight = document.getElementById('weight').value;
