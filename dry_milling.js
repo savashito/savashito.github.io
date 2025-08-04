@@ -16,43 +16,35 @@ if(!key){
 }*/
 
 
-document.getElementById('dryingForm').addEventListener('submit', function(e) {
+document.getElementById('drying_milling_Form').addEventListener('submit', function(e) {
     e.preventDefault();
-    const dryStartDate = document.getElementById('dry-start-date').value;
-    const dryEndDate = document.getElementById('dry-end-date').value;
+    const dry_millingStartDate = document.getElementById('dry-milling-start-date').value;
     const action_weight = document.getElementById('weight').value;
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
     if(!key){
       alert('Please sign up first.');
     }
-    if (!dryStartDate || !dryEndDate || !action_weight || !action_moisture || !gps_location ) {
+    if (!dry_millingStartDate || !action_weight || !action_moisture || !gps_location ) {
       alert('Please fill out all fields.');
       return;
     }
     // calculate the duration from both calendars
-    const start = new Date(dryStartDate);
-    const end = new Date(dryEndDate);
+    const start = new Date(dry_millingStartDate);
     // Calculate duration in days
-    const durationMs = end - start;
-    const durationDays = Math.ceil(durationMs / (1000 * 60 * 60 * 24));
+    
 
-    // Check for negative duration
-    if (durationDays < 0) {
-      alert("Error: End date is before start date!");
-      return
-    } else {
-      console.log(`Drying duration: ${durationDays} day(s)`);
-    }
+  
+    
 
   const urlParams = new URLSearchParams(window.location.search);
   const nfc_id = urlParams.get("nfc_id");
-  const action_type = 'Drying';
+  const action_type = 'Dry_Milling';
   const farm_id = '1';
   // const ico_number = 'jojo';
   const action_variety_process = null;
-  const action_date = dryStartDate;
-  const action_duration = durationDays;
+  const action_date = dry_millingStartDate;
+ 
     
   let o = {
     nfc_id,
@@ -65,7 +57,7 @@ document.getElementById('dryingForm').addEventListener('submit', function(e) {
     action_weight,
     action_moisture,
     gps_location,
-    action_duration
+   
   };
   let s = JSON.stringify(o)
   console.log(s)
