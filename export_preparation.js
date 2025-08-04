@@ -24,6 +24,8 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
     // const action_weight = document.getElementById('weight').value;
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
+  const farm_id = document.getElementById("farm").value;
+    console.log("farm_id ", farm_id)
     if(!key){
       alert('Please sign up first.');
     }
@@ -34,7 +36,6 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
   const urlParams = new URLSearchParams(window.location.search);
   const nfc_id = urlParams.get("nfc_id");
   const action_type = 'Export Preparation';
-  const farm_id = '1';
   // const icn_number = 'jojo';
   const action_variety_process = packagingType;
   const action_date = ExportDate;
@@ -43,7 +44,7 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
     nfc_id,
     actor_id,
     action_type,
-    farm_id: '1',
+    farm_id: farm_id,
     // ico_number,
     action_variety_process,
     action_date,

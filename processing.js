@@ -24,6 +24,9 @@ document.getElementById('processingForm').addEventListener('submit', function(e)
     // const action_weight = document.getElementById('weight').value;
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
+     const farm_id = document.getElementById("farm").value;
+    console.log(farm_id)
+    
     if(!key){
       alert('Please sign up first.');
     }
@@ -34,7 +37,6 @@ document.getElementById('processingForm').addEventListener('submit', function(e)
   const urlParams = new URLSearchParams(window.location.search);
   const nfc_id = urlParams.get("nfc_id");
   const action_type = 'Processing';
-  const farm_id = '1';
   // const icn_number = 'jojo';
   const action_variety_process = processingType;
   const action_date = processingDate;
@@ -43,7 +45,7 @@ document.getElementById('processingForm').addEventListener('submit', function(e)
     nfc_id,
     actor_id,
     action_type,
-    farm_id: '1',
+    farm_id: farm_id,
     // icn_number,
     action_variety_process,
     action_date,
