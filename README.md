@@ -132,10 +132,10 @@
   - [✅ Done] Name and `actor_id` decrypted [Doce]
 - Select what to log: [✅ Done]
   - Harvesting  [✅ Done]
-  - Drying 
-  - Processing  
-  - Dry Mill  
-  - Export Preparation
+  - Drying ✅ Done
+  - Processing  ✅ Done
+  - Dry Mill  ✅ Done
+  - Export Preparation✅ Done
 - Add pictures of the process
 
 ---
