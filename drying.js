@@ -23,6 +23,7 @@ document.getElementById('dryingForm').addEventListener('submit', function(e) {
     const action_weight = document.getElementById('weight').value;
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
+    const farm_id = document.getElementById("farm").value;
     if(!key){
       alert('Please sign up first.');
     }
@@ -48,7 +49,6 @@ document.getElementById('dryingForm').addEventListener('submit', function(e) {
   const urlParams = new URLSearchParams(window.location.search);
   const nfc_id = urlParams.get("nfc_id");
   const action_type = 'Drying';
-  const farm_id = '1';
   // const ico_number = 'jojo';
   const action_variety_process = null;
   const action_date = dryStartDate;
@@ -58,7 +58,7 @@ document.getElementById('dryingForm').addEventListener('submit', function(e) {
     nfc_id,
     actor_id,
     action_type,
-    farm_id: '1',
+    farm_id: farm_id,
     // icn_number,
     action_variety_process,
     action_date,
