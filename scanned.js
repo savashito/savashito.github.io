@@ -4,7 +4,7 @@ const action_dic = {
   'Drying':'drying.html',
   'Processing':'processing.html',
   'Dry Mill':'dry_milling.html',
-  'Export Preparation':''
+  'Export Preparation':'export_preparation.html'
   };
   
 const urlParams = new URLSearchParams(window.location.search);
