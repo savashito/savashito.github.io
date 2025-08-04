@@ -24,6 +24,8 @@ document.getElementById('dryingForm').addEventListener('submit', function(e) {
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
     const farm_id = document.getElementById("farm").value;
+    console.log(farm_id)
+    
     if(!key){
       alert('Please sign up first.');
     }
