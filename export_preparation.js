@@ -37,7 +37,7 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
   const farm_id = '1';
   // const icn_number = 'jojo';
   const action_variety_process = packagingType;
-  const action_date = processingDate;
+  const action_date = ExportDateDate;
     
   let o = {
     nfc_id,
