@@ -108,12 +108,13 @@ if (countrySelect && regionSelect) {
       submitBtn.disabled = true;
       let { publicKey, privateKey } = await generateKeyPair();
       console.log("Public key and private key created");
+
       let jwk = await crypto.subtle.exportKey("jwk", publicKey);
-      console.log(jwk);
       // we store the private key
       encryptAndStorePrivateKey({privateKey, actor_id, name}, "9732");
-      // send_to_api("submit", o);
 
+
+      // send_to_api("submit", o);
       fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/submit", {
         // console.log("Sending");
       // fetch("http://localhost:8888/.netlify/functions/submit", {

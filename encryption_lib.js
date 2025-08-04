@@ -9,6 +9,7 @@ async function generateKeyPair() {
 		["sign", "verify"]
 	);
 }
+
 async function deriveAesKeyFromPassphrase(passphrase, salt) {
 	const encoder = new TextEncoder();
 	const keyMaterial = await crypto.subtle.importKey(
@@ -100,7 +101,7 @@ async function signMessage(privateKey, message) {
 		privateKey,
 		data
 	);
-	}
+}
 
 function arrayBufferToBase64(buffer) {
     let binary = '';
@@ -207,20 +208,76 @@ function getLocation() {
 	});
   }
   
-// Get dropdown elements
-const farmSelect = document.getElementById("farm");
-const farms_dic = {
-	"Mbale West": ["Oaxaca", "Guerrero", "Chiapas"],
-	"Mbale West2": ["Eje cafetero", "Armenia", "Salento"],
-	"Mbale South": ["Kampala", "Mbale", "Fort Portal"]
-  };  
+
+// const farms_dic = {
+// 	"Mbale West": ["Oaxaca", "Guerrero", "Chiapas"],
+// 	"Mbale West2": ["Eje cafetero", "Armenia", "Salento"],
+// 	"Mbale South": ["Kampala", "Mbale", "Fort Portal"]
+//   };  
+//   {"id":1,"name":"KAGANDA ESTATE\n \n \n \n ","region":"Mukono, Central Region,","country":"Uganda","address":"Mukono, Central Region,","gps_location":null}
+
 // Populate the country dropdown on page load
-if (farmSelect) {
-  farmSelect.innerHTML = '<option value="">-- Select Farm --</option>';
-  Object.keys(farms_dic).forEach((country) => {
-    const option = document.createElement("option");
-    option.value = country;
-    option.textContent = country;
-    farmSelect.appendChild(option);
-  });
+
+////////
+
+async function loadFarms() {
+	const farms_dic = {}
+  try {
+    const response = await fetch("https://classy-peony-a6f6e7.netlify.app/.netlify/functions/get_farm_locations");
+    if (!response.ok) {
+      throw new Error("Failed to fetch farm data");
+    }
+
+    const farms = await response.json();
+
+    farms.forEach(farm => {
+      const country = farm.country || "Unknown"; // fallback if null
+      const name = farm.name;
+
+      if (!farms_dic[country]) {
+        farms_dic[country] = [];
+      }
+
+      farms_dic[country].push({ name: farm.name, id: farm.id });
+    });
+
+    console.log("Farms dictionary:", farms_dic);
+  } catch (error) {
+    console.error("Error loading farms:", error);
+  }
+  // Get dropdown elements
+	const countrySelect = document.getElementById("country");
+	const farmSelect = document.getElementById("farm");
+
+  	console.log("FIll countries ", farms_dic)
+	if (countrySelect) {
+		countrySelect.innerHTML = '<option value="">-- Select Farm --</option>';
+		Object.keys(farms_dic).forEach((country) => {
+			console.log(country);
+			const option = document.createElement("option");
+			option.value = country;
+			option.textContent = country;
+			countrySelect.appendChild(option);
+		});
+	}
+	  // Update region dropdown when country changes
+	if (countrySelect && farmSelect) {
+		countrySelect.addEventListener("change", function () {
+		const selectedCountry = this.value;
+		const farm = farms_dic[selectedCountry];
+		console.log(farm.name)
+		// Reset region dropdown
+		farmSelect.innerHTML = '<option value="">-- Select a farm --</option>';
+		farm.forEach((farm) => {
+			const option = document.createElement("option");
+			option.value = farm.id;
+			option.textContent = farm.name;
+			farmSelect.appendChild(option);
+		});
+		});
+	}
+
 }
+
+// Call the function when your page loads or when needed
+loadFarms();
