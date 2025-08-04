@@ -3,7 +3,7 @@ const action_dic = {
   'Harvesting':'harvesting.html',
   'Drying':'drying.html',
   'Processing':'processing.html',
-  'Dry Mill':'',
+  'Dry Mill':'dry_milling.html',
   'Export Preparation':''
   };
   
