@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harvest Form</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <form class="form-container" id="export_preparationForm">
+    <h2>Export Preparation Booking f</h2>
+    
+    <label for="farm">Export Location / Farm Name</label>
+    <select id="farm" name="farm" required></select>
+
+    <label for="packaging-type">Packaging Type</label>
+    <select id="packaging-type" name="packaging-type" required>
+      <option value="">-- Select Packaging Type --</option>
+      <option value="jute">Jute</option>
+      <option value="jute_grainpro">Jute + Grainpro</option>
+    </select>
+
+    <label for="export-date">Export Date</label>
+    <input type="date" id="export-date" name="export-date" required />
+
+    <label for="moisture">Moisture before packing (%):</label>
+    <input id="moisture" type="number" min="0" step="0.1" max="100" placeholder="e.g. 10.1">
+
+
+    <label for="gps">GPS Location</label>
+    <button type="button" onclick="getLocation()">Share GPS Location</button>
+    <input type="text" id="gps" name="gps" required readonly placeholder="Click above to update" />
+
+    <input type="submit" value="Submit" id="submitBtn"/>
+  </form>
+
+  <script src="encryption_lib.js"></script>
+  <script src="export_preparation.js"></script>
+</body>
+</html>

@@ -3,8 +3,8 @@ const action_dic = {
   'Harvesting':'harvesting.html',
   'Drying':'drying.html',
   'Processing':'processing.html',
-  'Dry Mill':'',
-  'Export Preparation':''
+  'Dry Mill':'dry_milling.html',
+  'Export Preparation':'export_preparation.html'
   };
   
 const urlParams = new URLSearchParams(window.location.search);
