@@ -22,6 +22,7 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
     const packagingType = document.getElementById('packaging-type').value;
     const ExportDate = document.getElementById('export-date').value;
     // const action_weight = document.getElementById('weight').value;
+    const exportPort = document.getElementById('export-port').value;
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
 
@@ -36,7 +37,7 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
   const nfc_id = urlParams.get("nfc_id");
   const action_type = 'Export Preparation';
   // const icn_number = 'jojo';
-  const action_variety_process = packagingType;
+const action_variety_process = `${packagingType} | Exporthafen: ${exportPort}`;
   const action_date = ExportDate;
     
   let o = {
