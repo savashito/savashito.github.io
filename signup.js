@@ -78,7 +78,7 @@ if (countrySelect && regionSelect) {
       const region = document.getElementById("region").value;
       const gps = document.getElementById("gps").value;
   
-      if (!name || !country || !region || !gps ) {
+      if (!name || !country || !gps ) {
         alert("Please fill out all fields and share your location.");
         return;
       }
