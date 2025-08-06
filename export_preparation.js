@@ -25,6 +25,10 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
     const exportPort = document.getElementById('export-port').value;
     const action_moisture = document.getElementById('moisture').value;
     const gps_location = document.getElementById('gps').value;
+    const ico_number = document.getElementById('ico-number').value;
+if (ico_number) {
+  o.ico_number = ico_number;
+}
 
     if(!key){
       alert('Please sign up first.');
