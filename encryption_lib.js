@@ -232,13 +232,13 @@ async function loadFarms() {
 
     farms.forEach(farm => {
       const country = farm.country || "Unknown"; // fallback if null
-      const name = farm.name;
+	  
 
       if (!farms_dic[country]) {
         farms_dic[country] = [];
       }
 
-      farms_dic[country].push({ name: farm.name, id: farm.id });
+      farms_dic[country].push({ region: farm.region, name: farm.name, id: farm.id });
     });
 
     console.log("Farms dictionary:", farms_dic);
@@ -247,6 +247,7 @@ async function loadFarms() {
   }
   // Get dropdown elements
 	const countrySelect = document.getElementById("country");
+	const regionSelect = document.getElementById("region");
 	const farmSelect = document.getElementById("farm");
 
   	console.log("FIll countries ", farms_dic)
@@ -260,7 +261,27 @@ async function loadFarms() {
 			countrySelect.appendChild(option);
 		});
 	}
+
+
 	  // Update region dropdown when country changes
+	if (countrySelect && regionSelect) {
+		countrySelect.addEventListener("change", function () {
+		const selectedCountry = this.value;
+		const farm = farms_dic[selectedCountry];
+		// Correct this bug
+		// Farms should have unique region names for the selected country.
+			
+		// Reset region dropdown
+		regionSelect.innerHTML = '<option value="">-- Select a farm --</option>';
+		farm.forEach((farm) => {
+			const option = document.createElement("option");
+			option.value = farm.id;
+			option.textContent = farm.region;
+			regionSelect.appendChild(option);
+		});
+		});
+	}
+	  // Update farms dropdown when country changes
 	if (countrySelect && farmSelect) {
 		countrySelect.addEventListener("change", function () {
 		const selectedCountry = this.value;

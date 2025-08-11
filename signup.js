@@ -1,9 +1,9 @@
 // Country → City Dictionary
-const countries_dic = {
-    Mexico: ["Oaxaca", "Guerrero", "Chiapas"],
-    Colombia: ["Eje cafetero", "Armenia", "Salento"],
-    Uganda: ["Kampala", "Mbale", "Fort Portal"]
-  };
+// const countries_dic = {
+//     Mexico: ["Oaxaca", "Guerrero", "Chiapas"],
+//     Colombia: ["Eje cafetero", "Armenia", "Salento"],
+//     Uganda: ["Kampala", "Mbale", "Fort Portal"]
+//   };
   
 const urlParams = new URLSearchParams(window.location.search);
 const unique_code = urlParams.get("unique_code");
@@ -39,32 +39,32 @@ const countrySelect = document.getElementById("country");
 const regionSelect = document.getElementById("region");
   
 // Populate the country dropdown on page load
-if (countrySelect) {
-  countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
-  Object.keys(countries_dic).forEach((country) => {
-    const option = document.createElement("option");
-    option.value = country;
-    option.textContent = country;
-    countrySelect.appendChild(option);
-  });
-}
+// if (countrySelect) {
+//   countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
+//   Object.keys(countries_dic).forEach((country) => {
+//     const option = document.createElement("option");
+//     option.value = country;
+//     option.textContent = country;
+//     countrySelect.appendChild(option);
+//   });
+// }
   
-  // Update region dropdown when country changes
-if (countrySelect && regionSelect) {
-    countrySelect.addEventListener("change", function () {
-      const selectedCountry = this.value;
-      const cities = countries_dic[selectedCountry] || [];
+//   // Update region dropdown when country changes
+// if (countrySelect && regionSelect) {
+//     countrySelect.addEventListener("change", function () {
+//       const selectedCountry = this.value;
+//       const cities = countries_dic[selectedCountry] || [];
   
-      // Reset region dropdown
-      regionSelect.innerHTML = '<option value="">-- Select region --</option>';
-      cities.forEach((region) => {
-        const option = document.createElement("option");
-        option.value = region;
-        option.textContent = region;
-        regionSelect.appendChild(option);
-      });
-    });
-}
+//       // Reset region dropdown
+//       regionSelect.innerHTML = '<option value="">-- Select region --</option>';
+//       cities.forEach((region) => {
+//         const option = document.createElement("option");
+//         option.value = region;
+//         option.textContent = region;
+//         regionSelect.appendChild(option);
+//       });
+//     });
+// }
   
 
   // Handle signup form
