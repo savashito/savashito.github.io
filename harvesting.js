@@ -59,11 +59,6 @@ document.getElementById('harvestForm').addEventListener('submit', async function
   };
 
  
-  
-
-
-  // shared fields 
-  const base = { nfc_id, actor_id, farm_id, gps_location };
 
   // 1) HARVESTING-Entry (immer)
   const harvestingEntry = {
