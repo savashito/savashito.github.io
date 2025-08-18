@@ -219,6 +219,7 @@ function getLocation() {
 // Populate the country dropdown on page load
 
 ////////
+// https://classy-peony-a6f6e7.netlify.app/.netlify/functions/get_passport
 
 async function loadFarms() {
 	const farms_dic = {}
@@ -270,7 +271,7 @@ async function loadFarms() {
 		const farm = farms_dic[selectedCountry];
 		// Correct this bug
 		// Farms should have unique region names for the selected country.
-			
+
 		// Reset region dropdown
 		regionSelect.innerHTML = '<option value="">-- Select a farm --</option>';
 		farm.forEach((farm) => {

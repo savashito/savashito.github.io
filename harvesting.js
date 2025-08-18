@@ -28,7 +28,7 @@ document.getElementById('harvestForm').addEventListener('submit', async function
      const harvestEndDate = document.getElementById('harvest-end-date').value;
     const action_weight = document.getElementById('weight').value;
     const action_moisture = document.getElementById('moisture').value; // optional
-    const processing_Method = document.getElementById('processing-method').value; // optional
+    const processingMethod = document.getElementById('processing-method').value; // optional
     const gps_location = document.getElementById('gps').value;
     const farm_id = document.getElementById("farm").value;
     console.log("farm_id ", farm_id)
@@ -43,31 +43,21 @@ document.getElementById('harvestForm').addEventListener('submit', async function
   const nfc_id = urlParams.get("nfc_id");
 
   // duration in days (Harvesting)
-  const durationDays = Math.max(0, Math.ceil((new Date(endDate) - new Date(startDate)) / (1000*60*60*24))); 
+  const durationDays = Math.max(0, Math.ceil((new Date(harvestEndDate) - new Date(harvestStartDate)) / (1000*60*60*24))); 
   
-  const base = { nfc_id, actor_id, farm_id, gps_location }; 
-
-  const harvesting = {
-    ...base,
-  action_type: 'Harvesting',
-  // const farm_id = '1';
-  // const icn_number = 'jojo';
- action_date: harvestEndDate,
-    action_duration: durationDays, 
-  action_variety_process: harvestType,
-  action_weight: Number(action_weight)
-  };
-
- 
+  const base = { nfc_id, actor_id}; 
 
   // 1) HARVESTING-Entry (immer)
-  const harvestingEntry = {
+  let harvestingEntry = {
     ...base,
     action_type: 'Harvesting',
-    action_date: harvestEndDate,                    // wir nehmen das Enddatum als "Hauptdatum"
+    farm_id,          // Variety
+    action_variety_process: harvestType,
+    action_date: harvestEndDate,        
+    action_weight: Number(action_weight),      // total cherries (kg)
+    action_moisture: Number(action_moisture),
+    gps_location,             // wir nehmen das Enddatum als "Hauptdatum"
     action_duration: durationDays,           // Dauer der Ernte
-    action_variety_process: variety,         // Variety
-    action_weight: Number(totalWeight),      // total cherries (kg)
     // keine drying moisture hier
   };
 
@@ -75,17 +65,45 @@ document.getElementById('harvestForm').addEventListener('submit', async function
   const processingEntry = processingMethod ? {
     ...base,
     action_type: 'Processing',
-    action_date: harvestEndDate,                    // i.d.R. nach Ende der Ernte
-    action_variety_process: processingMethod // z.B. "Fully washed"
+    farm_id,          // Variety
+    action_variety_process: processingMethod,
+    action_date: null,        
+    action_weight: Number(action_weight),      // total cherries (kg)
+    action_moisture: Number(action_moisture),
+    gps_location,             // wir nehmen das Enddatum als "Hauptdatum"
+    action_duration: durationDays,           // Dauer der Ernte
   } : null;
 
+
   // 3) DRYING-Entry (optional)
-  const dryingEntry = dryingMoisture ? {
+  const dryingEntry = action_moisture ? {
     ...base,
     action_type: 'Drying',
-    action_date: harvestEndDate,                    // oder eigenes Datum, falls du willst
-    action_moisture: Number(dryingMoisture)  // moisture of drying (%)
+    farm_id,          // Variety
+    action_variety_process: harvestType,
+    action_date: harvestEndDate,        
+    action_weight: Number(action_weight),      // total cherries (kg)
+    action_moisture: Number(action_moisture),
+    gps_location,             // wir nehmen das Enddatum als "Hauptdatum"
+    action_duration: null, 
   } : null;
+
+  console.log(harvestingEntry);
+  console.log(processingEntry);
+  console.log(dryingEntry);
+/*
+  let s = JSON.stringify(harvestingEntry)
+  console.log(s)
+  signMessage(key, s)
+  .then((signature) => {
+    console.log(signature);
+    harvestingEntry.signature_base64 = arrayBufferToBase64(signature);
+    console.log(harvestingEntry)
+    send_to_api("submit_dp_harvesting_entry", harvestingEntry);
+  })
+  */
+
+
 
   
   try {
@@ -98,9 +116,12 @@ document.getElementById('harvestForm').addEventListener('submit', async function
     if (dryingEntry) {
       await signAndSend("submit_dp_harvesting_entry", dryingEntry);
     }
-  alert("Entries submitted successfully!");
+    alert("Entries submitted successfully!");
+  } catch(e){
+    console.log(e);
   }
-
+  
+});
   /*
   let o = {
     nfc_id,
@@ -123,5 +144,4 @@ document.getElementById('harvestForm').addEventListener('submit', async function
 
   // send_to_api("submit_dp_harvesting_entry", o);
 
-    // alert(` ${actor_id} Harvest Type: ${harvestType} \nEnd Date: ${harvestDate}`)
-    /*
+    // alert(` ${actor_id} Harvest Type: ${harvestType} \nEnd Date: ${harvestDate}`)*/
