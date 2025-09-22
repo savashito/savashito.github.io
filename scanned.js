@@ -1,9 +1,6 @@
 // Country → City Dictionary
 const action_dic = {
-  'Harvesting':'harvesting.html',
-  'Drying':'drying.html',
-  'Processing':'processing.html',
-  'Dry Mill':'dry_milling.html',
+  'Harvesting/Processing':'harvesting.html',
   'Export Preparation':'export_preparation.html', 
   'Import': '',
   'Roasting': ''
@@ -45,15 +42,20 @@ loadAndDecryptPrivateKey("9732")
 
 const actionSelect = document.getElementById("action");
   
-// Populate the country dropdown on page load
 if (actionSelect) {
   actionSelect.innerHTML = '<option value="">-- Select an Action --</option>';
-  
-  Object.keys(action_dic).forEach((action) => {
-    const option = document.createElement("option");
-    option.value = action;
-    option.textContent = action;
-    actionSelect.appendChild(option);
+
+  ACTIONS_TO_SHOW.forEach((label) => {
+    const href = action_dic[label] || '';
+    const opt  = document.createElement('option');
+    opt.value = label;
+    if (!href) {
+      opt.textContent = `${label} (coming soon)`;
+      opt.disabled = true; // falls die Zielseite noch fehlt
+    } else {
+      opt.textContent = label;
+    }
+    actionSelect.appendChild(opt);
   });
 }
   
@@ -91,6 +93,7 @@ if (actionSelect) {
         alert("Please select a valid action");
         return;
       }
+      
       window.location.href = action_dic[action] +"?nfc_id="+nfc_id
      
     });
