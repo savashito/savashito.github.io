@@ -17,55 +17,73 @@ if(!key){
 
 
 document.getElementById('export_preparationForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-  
-    const packagingType = document.getElementById('packaging-type').value;
-    const ExportDate = document.getElementById('export-date').value;
-    // const action_weight = document.getElementById('weight').value;
-    const exportPort = document.getElementById('export-port').value;
-    const action_moisture = document.getElementById('moisture').value;
-    const gps_location = document.getElementById('gps').value;
-    const ico_number = document.getElementById('ico-number').value;
-if (ico_number) {
-  o.ico_number = ico_number;
-}
+  e.preventDefault();
 
-    if(!key){
-      alert('Please sign up first.');
-    }
-    if (!packagingType || !ExportDate) {
-      alert('Please fill out all fields.');
-      return;
-    }
+  const packagingType = document.getElementById('packaging-type').value;
+  const ExportDate    = document.getElementById('export-date').value;
+  const exportPort    = document.getElementById('export-port').value;
+  const action_moisture = document.getElementById('moisture').value; // optional
+  const gps_location  = document.getElementById('gps').value;
+  const ico_number    = document.getElementById('ico-number').value;
+
+  // **NEU**: farm_id sauber lesen (oder null, wenn kein Select da ist)
+  const farmEl  = document.getElementById('farm');
+  const farm_id = farmEl ? farmEl.value : null;
+
+  if (!key) {
+    alert('Please sign up first.');
+    return; // **NEU**: abbrechen!
+  }
+  if (!packagingType || !ExportDate) {
+    alert('Please fill out all fields.');
+    return;
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   const nfc_id = urlParams.get("nfc_id");
   const action_type = 'Export Preparation';
-  // const icn_number = 'jojo';
-const action_variety_process = `${packagingType} | Exporthafen: ${exportPort}`;
-  const action_date = ExportDate;
-    
+
+  // Freitext wie bisher
+  const action_variety_process = exportPort
+      ? `${packagingType} | Exporthafen: ${exportPort}`
+      : packagingType;
+
+  // **NEU**: Moisture optional → als Zahl oder null
+  const moistureValue = action_moisture === '' ? null : Number(action_moisture);
+
+  // **NEU**: o erst JETZT definieren…
   let o = {
     nfc_id,
     actor_id,
     action_type,
-    farm_id: farm_id,
-    // ico_number,
+    farm_id, // darf null sein
     action_variety_process,
-    action_date,
-    // action_weight,
-    action_moisture,
-    gps_location
+    action_date: ExportDate,
+    action_moisture: moistureValue,
+    gps_location: gps_location || null
   };
+
+  // …und JETZT optionales Feld anhängen
+  if (ico_number) {
+    o.ico_number = ico_number;
+  }
+
+  // (optional) kurz loggen, was gesendet wird
+  console.log('Export payload:', o);
+
   signMessage(key, JSON.stringify(o))
-  .then((signature) => {
-    console.log(signature);
-    o.signature_base64 = arrayBufferToBase64(signature);
-    send_to_api("submit_dp_harvesting_entry", o);
-  })
-
-  // send_to_api("submit_dp_harvesting_entry", o);
-
-    // alert(` ${actor_id} Harvest Type: ${harvestType} \nEnd Date: ${harvestDate}`);
+    .then((signature) => {
+      o.signature_base64 = arrayBufferToBase64(signature);
+      // benutze dieselbe Funktion/den selben Endpoint wie bisher
+      send_to_api("submit_dp_harvesting_entry", o);
+      // oder, falls du auf async/json umgestellt hast:
+      // send_to_api_async("submit_dp_harvesting_entry", o);
+    })
+    .catch(err => {
+      console.error('Sign failed:', err);
+      alert('Signing failed.');
+    });
 });
+
 
 
