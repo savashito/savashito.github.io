@@ -1,89 +1,101 @@
-let actor_id=''
-let actor_name=''
-let key=''
+"use strict";
 
-loadAndDecryptPrivateKey("9732")
-.then((decrypted_data) => {
-  actor_id= decrypted_data.actor_id
-  key = decrypted_data.key
-  actor_name = decrypted_data.name
-  console.log(actor_id);
-    // {key, actor_id, name}
-  });
-/*
-if(!key){
-  alert('Please sign up first.');
-}*/
+/* 1) Keys laden */
+let actor_id = '', actor_name = '', key = '';
+loadAndDecryptPrivateKey("9732").then(d => {
+  actor_id = d.actor_id; key = d.key; actor_name = d.name;
+});
 
+/* 2) Helper für "Other..." bei Packaging */
+function valueWithOther(selectId, otherInputId) {
+  const sel = document.getElementById(selectId);
+  const other = document.getElementById(otherInputId);
+  if (!sel) return null;
+  if (sel.value === "__other__") {
+    const t = (other.value || "").trim();
+    return t || null;
+  }
+  // hübscher: Label-Text statt value wie "jute"
+  return sel.options[sel.selectedIndex]?.text || sel.value || null;
+}
+function setupOtherToggle(selectId, otherInputId, requiredWhenOther) {
+  const sel = document.getElementById(selectId);
+  const other = document.getElementById(otherInputId);
+  if (!sel || !other) return;
+  const update = () => {
+    const show = sel.value === "__other__";
+    other.classList.toggle("hidden", !show);
+    other.required = !!(requiredWhenOther && show);
+    if (!show) other.value = "";
+  };
+  sel.addEventListener("change", update);
+  update();
+}
 
+/* 3) Beim Laden: Toggle aktivieren */
+document.addEventListener("DOMContentLoaded", () => {
+  setupOtherToggle("packaging-type", "packaging-type-other", true);
+  // Optional zum Debuggen:
+  console.log("Form vorhanden?", !!document.getElementById('export_preparationForm'));
+});
+
+/* ====== SUBMIT-HANDLER (HIER!) ====== */
 document.getElementById('export_preparationForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const packagingType = document.getElementById('packaging-type').value;
-  const ExportDate    = document.getElementById('export-date').value;
-  const exportPort    = document.getElementById('export-port').value;
-  const action_moisture = document.getElementById('moisture').value; // optional
-  const gps_location  = document.getElementById('gps').value;
-  const ico_number    = document.getElementById('ico-number').value;
-
-  // **NEU**: farm_id sauber lesen (oder null, wenn kein Select da ist)
-  const farmEl  = document.getElementById('farm');
-  const farm_id = farmEl ? farmEl.value : null;
-
-  if (!key) {
-    alert('Please sign up first.');
-    return; // **NEU**: abbrechen!
-  }
-  if (!packagingType || !ExportDate) {
-    alert('Please fill out all fields.');
-    return;
-  }
+  if (!key) { alert('Please sign up first.'); return; }
 
   const urlParams = new URLSearchParams(window.location.search);
   const nfc_id = urlParams.get("nfc_id");
+
+  const packagingType = valueWithOther('packaging-type','packaging-type-other'); // required
+  const exportDate    = document.getElementById('export-date').value;             // required
+  const exportPort    = document.getElementById('export-port').value.trim();
+  const moistureStr   = document.getElementById('moisture').value;                // optional
+  const ico_number    = document.getElementById('ico-number').value.trim();
+  const gps_location  = document.getElementById('gps').value.trim();
+
+  // Falls du kein Farm-Select hast, bleibt das null
+  const farmEl  = document.getElementById('farm');
+  const farm_id = farmEl ? farmEl.value : null;
+
+  if (!packagingType || !exportDate) {
+    alert('Please choose a packaging type (or enter Other) and the export date.');
+    return;
+  }
+
+  const action_moisture = moistureStr === '' ? null : Number(moistureStr);
+  if (action_moisture !== null && (Number.isNaN(action_moisture) || action_moisture < 0 || action_moisture > 100)) {
+    alert("Moisture must be between 0 and 100.");
+    return;
+  }
+
   const action_type = 'Export Preparation';
-
-  // Freitext wie bisher
   const action_variety_process = exportPort
-      ? `${packagingType} | Exporthafen: ${exportPort}`
-      : packagingType;
+    ? `${packagingType} | Exporthafen: ${exportPort}`
+    : packagingType;
 
-  // **NEU**: Moisture optional → als Zahl oder null
-  const moistureValue = action_moisture === '' ? null : Number(action_moisture);
-
-  // **NEU**: o erst JETZT definieren…
-  let o = {
+  const o = {
     nfc_id,
     actor_id,
     action_type,
     farm_id, // darf null sein
     action_variety_process,
-    action_date: ExportDate,
-    action_moisture: moistureValue,
+    action_date: exportDate,
+    action_moisture,
     gps_location: gps_location || null
   };
+  if (ico_number) o.ico_number = ico_number;
 
-  // …und JETZT optionales Feld anhängen
-  if (ico_number) {
-    o.ico_number = ico_number;
-  }
-
-  // (optional) kurz loggen, was gesendet wird
-  console.log('Export payload:', o);
-
+  // signieren + senden (nimm deine bestehende Funktion)
   signMessage(key, JSON.stringify(o))
-    .then((signature) => {
-      o.signature_base64 = arrayBufferToBase64(signature);
-      // benutze dieselbe Funktion/den selben Endpoint wie bisher
+    .then(sig => {
+      o.signature_base64 = arrayBufferToBase64(sig);
       send_to_api("submit_dp_harvesting_entry", o);
-      // oder, falls du auf async/json umgestellt hast:
-      // send_to_api_async("submit_dp_harvesting_entry", o);
+      // oder: send_to_api_async("submit_dp_harvesting_entry", o);
     })
     .catch(err => {
-      console.error('Sign failed:', err);
+      console.error('Signing failed:', err);
       alert('Signing failed.');
     });
 });
-
-
-
