@@ -20,9 +20,13 @@
     <label for="packaging-type">Packaging Type</label>
     <select id="packaging-type" name="packaging-type" required>
       <option value="">-- Select Packaging Type --</option>
-      <option value="jute">Jute</option>
+      <option value="jute">Jute bags</option>
       <option value="jute_grainpro">Jute + Grainpro</option>
-    </select>
+       <option value="__other__">Other...</option>
+</select>
+<input id="packaging-type-other" type="text" class="hidden" placeholder="Enter other packaging type">
+<style>.hidden{display:none;}</style>
+
 
     <label for="export-date">Export Date</label>
     <input type="date" id="export-date" name="export-date" required />
