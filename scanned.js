@@ -1,11 +1,19 @@
 // Country → City Dictionary
 const action_dic = {
-  'Harvesting/Processing':'harvesting.html',
-  'Export Preparation':'export_preparation.html', 
-  'Import': '',
-  'Roasting': ''
-  };
-  
+  'Harvesting / Processing': 'harvesting.html', // <- deine neue Seite
+  'Export Preparation':      'export_preparation.html',
+  'Import (Arrival)':        '',       
+  'Roasting':                ''               
+};
+
+ const ACTIONS_TO_SHOW = [
+  'Harvesting / Processing',
+  'Export Preparation',
+  'Import (Arrival)',
+  'Roasting' 
+
+ ];
+
 const urlParams = new URLSearchParams(window.location.search);
 const nfc_id = urlParams.get("nfc_id");
 
@@ -41,7 +49,7 @@ loadAndDecryptPrivateKey("9732")
 // Get dropdown elements
 
 const actionSelect = document.getElementById("action");
-  
+
 if (actionSelect) {
   actionSelect.innerHTML = '<option value="">-- Select an Action --</option>';
 
@@ -51,13 +59,14 @@ if (actionSelect) {
     opt.value = label;
     if (!href) {
       opt.textContent = `${label} (coming soon)`;
-      opt.disabled = true; // falls die Zielseite noch fehlt
+      opt.disabled = true; // deaktiviert, solange die Seite fehlt
     } else {
       opt.textContent = label;
     }
     actionSelect.appendChild(opt);
   });
 }
+
   
   // Update region dropdown when country changes
 /*
