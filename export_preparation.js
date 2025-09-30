@@ -80,12 +80,20 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
     actor_id,
     action_type,
     farm_id, // darf null sein
-    action_variety_process,
+
+    harvest_method:null,
+    variety:null,
+    processing_method:null,
+    drying_method:null,
+    action_start_date:null,
+
     action_date: exportDate,
+    action_weight:null,
     action_moisture,
-    gps_location: gps_location || null
+    gps_location: gps_location || null,
+    ico_number,
   };
-  if (ico_number) o.ico_number = ico_number;
+  // if (ico_number) o.ico_number = ico_number;
 
   // signieren + senden (nimm deine bestehende Funktion)
   signMessage(key, JSON.stringify(o))

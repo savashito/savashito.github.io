@@ -110,7 +110,7 @@ document.getElementById("harvestForm").addEventListener("submit", async (e) => {
   const country      = document.getElementById("country").value;
   const farmSelect   = document.getElementById("farm");
   const farm_id      = farmSelect.value;
-  const farm_name    = farmSelect.options[farmSelect.selectedIndex]?.text || null;
+  // const farm_name    = farmSelect.options[farmSelect.selectedIndex]?.text || null;
 
   const harvest_method = valueWithOther("harvest-method", "harvest-method-other"); // required
   const variety        = (document.getElementById("variety").value || "").trim(); // freier Text (required im HTML)
@@ -160,23 +160,20 @@ document.getElementById("harvestForm").addEventListener("submit", async (e) => {
     action_type: "harvesting_processing",
     farm_id: Number(farm_id),
 
-    snapshot_country: country,
-    snapshot_farm_name: farm_name,
-
     harvest_method,
-    action_start_date: startDate,
-    action_date: endDate,         // Hauptdatum = Ende
     variety,
-    action_weight,
     processing_method: processing || null,
     drying_method:     drying     || null,
+
+    action_start_date: startDate,
+    action_date: endDate,         // Hauptdatum = Ende
+    action_weight,
     action_moisture,
-
     gps_location: gps_location || null,
-
-    action_duration
+    ico_number: null,
+    // action_duration
   };
-
+  console.log(payload)
   try {
     await signAndSend("submit_dp_harvesting_entry", payload);
     alert("Entry submitted successfully!");

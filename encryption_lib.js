@@ -195,7 +195,7 @@ function getLocation() {
 		// document.getElementById("signupForm").reset();
 	  } else {
 		console.error(res);
-		alert(res);
+		alert(res.error);
 	  }
 	})
 	.catch((err) => {
