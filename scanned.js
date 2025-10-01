@@ -2,15 +2,13 @@
 const action_dic = {
   'Harvesting / Processing': 'harvesting.html', // <- deine neue Seite
   'Export Preparation':      'export_preparation.html',
-  'Import (Arrival)':        '',       
-  'Roasting':                ''               
+  'Import / Roasting' : 'import_roasting.js'              
 };
 
  const ACTIONS_TO_SHOW = [
   'Harvesting / Processing',
   'Export Preparation',
-  'Import (Arrival)',
-  'Roasting' 
+  'Import / Roasting'
 
  ];
 
