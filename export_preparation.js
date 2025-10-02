@@ -71,9 +71,7 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
   }
 
   const action_type = 'Export Preparation';
-  const action_variety_process = exportPort
-    ? `${packagingType} | Exporthafen: ${exportPort}`
-    : packagingType;
+
 
   const o = {
     nfc_id,
@@ -92,6 +90,8 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
     action_moisture,
     gps_location: gps_location || null,
     ico_number,
+    packagingType,
+    exportPort
   };
   // if (ico_number) o.ico_number = ico_number;
 
