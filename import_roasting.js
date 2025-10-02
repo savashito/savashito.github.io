@@ -73,7 +73,7 @@ window.getLocation = function getLocation() {
 
 
 /* ====== Submit: 'import_roasting' ====== */
-document.getElementById("roastingForm").addEventListener("submit", async (e) => {
+document.getElementById("importRoastingForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   if (!key) {
@@ -82,9 +82,9 @@ document.getElementById("roastingForm").addEventListener("submit", async (e) => 
   }
 
   // Pflicht-/Optionalfelder lesen
-  const country      = document.getElementById("country").value;
-  const farmSelect   = document.getElementById("farm");
-  const farm_id      = farmSelect.value;
+  // const country      = document.getElementById("country").value;
+  // const farmSelect   = document.getElementById("farm");
+  // const farm_id      = farmSelect.value;
   // const farm_name    = farmSelect.options[farmSelect.selectedIndex]?.text || null;
 
 
@@ -119,18 +119,26 @@ const action_weight   = Number(weightStr);
     nfc_id,
     actor_id,
     action_type: "import_roasting",
-    farm_id: Number(farm_id),
+    farm_id: null,
 
-    coffee_id: coffee_id,
-    roast_level,
-    roast_temp: Number(roast_temp),
-    action_duration: Number(roast_duration),
 
+
+    harvest_method:null,
+    variety:null,
+    processing_method:null,
+    drying_method:null,
+
+    action_start_date: null,
+    action_date: roast_date,
     action_weight,
-    action_moisture,
+    action_moisture:null,
     gps_location: gps_location || null,
     ico_number: ico_number || null,
-    
+
+    action_duration: Number(roast_duration),
+    coffee_id: coffee_id,
+    roast_level,
+    roast_temperature: Number(roast_temp),
   };
   console.log(payload)
   try {
