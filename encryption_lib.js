@@ -253,7 +253,7 @@ async function loadFarms() {
 
   	console.log("FIll countries ", farms_dic)
 	if (countrySelect) {
-		countrySelect.innerHTML = '<option value="">-- Select Farm --</option>';
+		countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
 		Object.keys(farms_dic).forEach((country) => {
 			console.log(country);
 			const option = document.createElement("option");
@@ -273,7 +273,7 @@ async function loadFarms() {
 		// Farms should have unique region names for the selected country.
 
 		// Reset region dropdown
-		regionSelect.innerHTML = '<option value="">-- Select a farm --</option>';
+		regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
 		farm.forEach((farm) => {
 			const option = document.createElement("option");
 			option.value = farm.id;
@@ -289,7 +289,7 @@ async function loadFarms() {
 		const farm = farms_dic[selectedCountry];
 		console.log(farm.name)
 		// Reset region dropdown
-		farmSelect.innerHTML = '<option value="">-- Select a farm --</option>';
+		farmSelect.innerHTML = '<option value="">-- Select a farm/company --</option>';
 		farm.forEach((farm) => {
 			const option = document.createElement("option");
 			option.value = farm.id;
