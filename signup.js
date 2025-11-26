@@ -142,7 +142,7 @@ const regionSelect = document.getElementById("region");
         console.log("Fetch!!");
         console.log(res);
         if (res.status === "success") {
-          alert("Signup for "+name+" saved to Google Sheets! ");
+          alert("Signup for "+name+" saved! ");
           // document.getElementById("signupForm").reset();
         } else {
           console.error(res);
