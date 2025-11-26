@@ -51,6 +51,7 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
   const packagingType = valueWithOther('packaging-type','packaging-type-other'); // required
   const exportDate    = document.getElementById('export-date').value;             // required
   const exportPort    = document.getElementById('export-port').value.trim();
+  const exportQuantity    = document.getElementById('export_quantity').value; 
   const moistureStr   = document.getElementById('moisture').value;                // optional
   const ico_number    = document.getElementById('ico-number').value.trim();
   const gps_location  = document.getElementById('gps').value.trim();
@@ -86,7 +87,7 @@ document.getElementById('export_preparationForm').addEventListener('submit', fun
     action_start_date:null,
 
     action_date: exportDate,
-    action_weight:null,
+    action_weight:exportQuantity,
     action_moisture,
     gps_location: gps_location || null,
     ico_number,
