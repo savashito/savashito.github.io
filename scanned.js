@@ -38,8 +38,8 @@ loadAndDecryptPrivateKey("9732")
   key = decrypted_data.key
   actor_name = decrypted_data.name
   console.log(actor_id);
-  const welcomeName = document.getElementById("actor_name");
-  welcomeName.innerHTML = `Welcome ${actor_name}`
+  const welcomeName = document.getElementById("welcome-name");
+  welcomeName.innerHTML = `Welcome ${actor_id}`
   // welcomeName.innerHTML = `Welcome ${actor_name}`
     // {key, actor_id, name}
   });
